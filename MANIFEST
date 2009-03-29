@@ -6,4 +6,5 @@ V.pm
 t/00_pod.t
 t/01_pod.t
 t/10_base.t
+t/20_plv.t
 examples/show-v.pl

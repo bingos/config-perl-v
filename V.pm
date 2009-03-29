@@ -5,7 +5,7 @@ package Config::Perl::V;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Config;
 
@@ -117,6 +117,47 @@ my @config_vars = qw(
     cccdlflags lddlflags
     );
 
+my %empty_build = (
+    osname  => "",
+    stamp   => 0,
+    options => { %BTD },
+    patches => [],
+    );
+
+sub plv2hash
+{
+    my %config;
+    for (split m/\n+/ => join "\n", @_) {
+
+	if (s/^Summary of my\s+(\S+)\s+\(\s*(.*?)\s*\)//) {
+	    $config{"package"} = $1;
+	    my $rev = $2;
+	    $rev =~ s/^ revision \s+ (\S+) \s*//x and $config{revision} = $1;
+	    $rev and $config{version_patchlevel_string} = $rev;
+	    next;
+	    }
+
+	my %kv = m/\G,?\s*([^=]+)=('[^']+?'|\S+)/gc;
+
+	while (my ($k, $v) = each %kv) {
+	    $k =~ s/\s+$//;
+	    $v =~ s/,$//;
+	    $v =~ m/^'(.*)'$/ and $v = $1;
+	    $v =~ s/^\s+//;
+	    $v =~ s/\s+$//;
+	    $config{$k} = $v;
+	    }
+	}
+    my $build = { %empty_build };
+    $build->{osname} = $config{osname};
+    return {
+	build		=> $build,
+	environment	=> {},
+	config		=> \%config,
+	inc		=> [],
+	};
+    } # plv2hash
+
 sub myconfig
 {
     my $args = shift;
@@ -130,12 +171,7 @@ sub myconfig
 
     #print $pv;
 
-    my $build = {
-	osname  => "",
-	stamp   => "",
-	options => \%BTD,
-	patches => [],
-	};
+    my $build = { %empty_build };
     $pv =~ m{^\s+Built under (.*)}m                and $build->{osname} = $1;
     $pv =~ m{^\s+Compiled at (.*)}m                and $build->{stamp}  = $1;
     $pv =~ m{^\s+Locally applied patches:\s+(.*)}m and $build->{patches} = [ split m/\s+/, $1 ];
@@ -183,6 +219,11 @@ print $local_config->{config}{osname};
 =head2 myconfig ()
 
 Currently the only function. Documentation will follow.
+
+=head2 plv2hash ()
+
+Convert a sole 'perl -V' text block to a complete myconfig hash.
+All unknown entries are defaulted.
 
 =head1 REASONING
 
