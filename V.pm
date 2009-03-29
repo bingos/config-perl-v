@@ -203,21 +203,113 @@ Config::Perl::V - Structured data retreival of perl -V output
 
 =head1 SYNOPSIS
 
-use Config::Perl::V;
+ use Config::Perl::V;
 
-my $local_config = Config::Perl::V::myconfig ();
-print $local_config->{config}{osname};
+ my $local_config = Config::Perl::V::myconfig ();
+ print $local_config->{config}{osname};
 
 =head1 DESCRIPTION
 
 =head2 myconfig ()
 
-Currently the only function. Documentation will follow.
+This function will collect the data decribed in L<the hash structure> below,
 
 =head2 plv2hash ()
 
 Convert a sole 'perl -V' text block to a complete myconfig hash.
 All unknown entries are defaulted.
+
+=head2 The hash structure
+
+The returned hash consists of 4 parts:
+
+=over 4
+
+=item build
+
+This information is extracted from the second block that is emitted by
+C<perl -V>, and usually looks something like
+
+ Characteristics of this binary (from libperl):
+   Compile-time options: DEBUGGING USE_64_BIT_INT USE_LARGE_FILES
+   Locally applied patches:
+	 defined-or
+	 MAINT24637
+   Built under linux
+   Compiled at Jun 13 2005 10:44:20
+   @INC:
+     /usr/lib/perl5/5.8.7/i686-linux-64int
+     /usr/lib/perl5/5.8.7
+     /usr/lib/perl5/site_perl/5.8.7/i686-linux-64int
+     /usr/lib/perl5/site_perl/5.8.7
+     /usr/lib/perl5/site_perl
+     .
+
+or
+
+ Characteristics of this binary (from libperl):
+   Compile-time options: DEBUGGING MULTIPLICITY
+			 PERL_DONT_CREATE_GVSV PERL_IMPLICIT_CONTEXT
+			 PERL_MALLOC_WRAP PERL_TRACK_MEMPOOL
+			 PERL_USE_SAFE_PUTENV USE_ITHREADS
+			 USE_LARGE_FILES USE_PERLIO
+			 USE_REENTRANT_API
+   Built under linux
+   Compiled at Jan 28 2009 15:26:59
+
+This information is not available anywhere else, including C<%Config>,
+but it is the information that is only known to the perl binary.
+
+The extracted information is stored in 4 entries in the C<build> hash:
+
+=over 4
+
+=item osname
+
+This is most likely the same as C$Config{osname}>, and was the name
+known when perl was built. It might be different if perl was cross-compiled.
+
+The default for this field, if it cannot be extracted, is to copy C<$Config{osname}>.
+`
+=item stamp
+
+This is the time string for which the perl binary was compiled. The default
+value is 0.
+
+=item options
+
+This is a hash with all the known defines as keys. The value is either 0,
+which means unknown or unset, or 1, which means defined.
+
+=item patches
+
+This is a list of optionally locally applied patches. Default is an empty list.
+
+=back
+
+This include the flags that define the binary compatibility, like if
+this perl was compiled for 64bitall (C<USE_64_BIT_ALL>), and basically is 
+
+=item environment
+
+By default this hash is only filled with the environment variables
+out of %ENV that start with C<PERL>, but you can pass the C<env> option
+to myconfig to get more
+
+ my $conf = Config::Perl::V::myconfig ({ env => qr/^ORACLE/ });
+ my $conf = Config::Perl::V::myconfig ([ env => qr/^ORACLE/ ]);
+
+=item config
+
+This hash is filled with the variables that C<perl -V> fils it's report
+with, and it has the same variables that C<Config::myconfig> returns
+from C<%Config>.
+
+=item inc
+
+This is the list of default @INC.
+
+=back
 
 =head1 REASONING
 
@@ -233,8 +325,8 @@ Please feedback what is wrong
 
 =head1 TODO
 
-* Implement retreival functions/methods
-* Document what is done and why
+* Implement retrieval functions/methods
+* Documentation
 * Include the perl -V parse block from Andreas
 
 =head1 AUTHOR
