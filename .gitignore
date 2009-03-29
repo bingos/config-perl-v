@@ -1,0 +1,8 @@
+blib
+cover_db
+Makefile
+pm_to_blib
+Tk
+*.tar.gz
+*.tgz
+*.old
