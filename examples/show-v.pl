@@ -6,4 +6,4 @@ use warnings;
 use Data::Peek;
 use Config::Perl::V;
 
-DDumper Config::Perl::V::myconfig;
+DDumper Config::Perl::V::myconfig [ @ARGV ];

@@ -161,8 +161,8 @@ sub plv2hash
 sub myconfig
 {
     my $args = shift;
-    my %args = ref $args eq "HASH"  ? %  $args  :
-               ref $args eq "ARRAY" ? %{@$args} : ();
+    my %args = ref $args eq "HASH"  ? %$args :
+               ref $args eq "ARRAY" ? @$args : ();
 
     #y $pv = qx[$^X -e"sub Config::myconfig{};" -V];
     my $pv = qx[$^X -V];
@@ -179,13 +179,7 @@ sub myconfig
 
     my @KEYS = keys %ENV;
     my %env  =
-	map   { $_    => $ENV{$_} } grep m/^PERL/ => @ENV;
-    $args{db} || $args{pg} || $args{postgres} and
-	map { $env{$_} = $ENV{$_} } grep m{^PG}        => @KEYS;
-    $args{db} || $args{oracle} and
-	map { $env{$_} = $ENV{$_} } grep m{^ORACLE}    => @KEYS;
-    $args{db} || $args{mysql}  and
-	map { $env{$_} = $ENV{$_} } grep m{^M[yY]SQL}  => @KEYS;
+	map {      $_ => $ENV{$_} } grep m/^PERL/      => @KEYS;
     $args{env} and
 	map { $env{$_} = $ENV{$_} } grep m{$args{env}} => @KEYS;
 
