@@ -299,6 +299,11 @@ This function will collect the data decribed in L<the hash structure> below,
 and return that as a hash reference. It optionally accepts an option to
 include more entries from %ENV. See L<environment> below.
 
+Note that this will not work on uninstalled perls when called with
+C<-I/path/to/uninstalled/perl/lib>, but it works when that path is in
+C<$PERL5LIB> or in C<$PERL5OPT>, as paths passed using C<-I> are not
+known when the C<-V> information is collected.
+
 =head2 $conf = plv2hash ($text [, ...])
 
 Convert a sole 'perl -V' text block, or list of lines, to a complete
@@ -383,9 +388,6 @@ This is a list of optionally locally applied patches. Default is an empty list.
 
 =back
 
-This include the flags that define the binary compatibility, like if
-this perl was compiled for 64bitall (C<USE_64_BIT_ALL>), and basically is 
-
 =item environment
 
 By default this hash is only filled with the environment variables
@@ -397,7 +399,7 @@ to myconfig to get more
 
 =item config
 
-This hash is filled with the variables that C<perl -V> fils it's report
+This hash is filled with the variables that C<perl -V> fills its report
 with, and it has the same variables that C<Config::myconfig> returns
 from C<%Config>.
 
@@ -423,6 +425,8 @@ Please feedback what is wrong
 
 * Implement retrieval functions/methods
 * Documentation
+* Error checking
+* Tests
 
 =head1 AUTHOR
 
