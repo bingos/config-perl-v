@@ -71,6 +71,9 @@ my %BTD = map { $_ => 0 } qw(
 # 2. Reported by 'perl -V' (the rest)
 my @config_vars = qw(
 
+    api_subversion
+    api_version
+    api_versionstring
     archlibexp
     dont_use_nlink
     d_readlink
@@ -78,13 +81,23 @@ my @config_vars = qw(
     exe_ext
     inc_version_list
     ldlibpthname
+    patchlevel
     path_sep
+    perl_patchlevel
     privlibexp
     scriptdir
     sitearchexp
     sitelibexp
+    subversion
     usevendorprefix
     version
+
+    git_commit_id
+    git_describe
+    git_branch
+    git_uncommitted_changes
+    git_commit_id_title
+    git_snapshot_date
 
     package revision version_patchlevel_string
 
@@ -123,6 +136,17 @@ my %empty_build = (
     options => { %BTD },
     patches => [],
     );
+
+sub _make_derived
+{
+    my $conf = shift;
+
+    exists $conf->{config}{Off_t}
+	$conf->{derived}{Off_t} = delete $conf->{config}{Off_t};
+    exists $conf->{derived}{Off_t} && !exists $conf->{config}{lseektype} and
+	$conf->{config}{lseektype} = $conf->{derived}{Off_t};
+
+    } # _make_derived
 
 sub plv2hash
 {
