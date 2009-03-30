@@ -141,13 +141,40 @@ sub _make_derived
 {
     my $conf = shift;
 
-    for ( [ lseektype	=> "Off_t"	],
-	  [ myuname	=> "uname"	],
+    for ( [ lseektype		=> "Off_t"	],
+	  [ myuname		=> "uname"	],
+	  [ perl_patchlevel	=> "patch"	],
 	  ) {
 	my ($official, $derived) = @$_;
 	$conf->{config}{$derived}  ||= $conf->{config}{$official};
 	$conf->{config}{$official} ||= $conf->{config}{$derived};
 	$conf->{derived}{$derived} = delete $conf->{config}{$derived};
+	}
+
+    if (exists $conf->{config}{version_patchlevel_string} &&
+       !exists $conf->{config}{api_version}) {
+	my $vps = $conf->{config}{version_patchlevel_string};
+	$vps =~ s{\b revision   \s+ (\S+) }{}x and
+	    $conf->{config}{revision}        ||= $1;
+
+	$vps =~ s{\b version    \s+ (\S+) }{}x and
+	    $conf->{config}{api_version}     ||= $1;
+	$vps =~ s{\b subversion \s+ (\S+) }{}x and
+	    $conf->{config}{subversion}      ||= $1;
+	$vps =~ s{\b patch      \s+ (\S+) }{}x and
+	    $conf->{config}{perl_patchlevel} ||= $1;
+	}
+
+    ($conf->{config}{version_patchlevel_string} ||= join " ",
+	map  { ($_, $conf->{config}{$_} ) }
+	grep {      $conf->{config}{$_}   }
+	qw( api_version subversion perl_patchlevel )) =~ s/\bperl_//; 
+
+    $conf->{config}{perl_patchlevel}  ||= "";	# 0 is not a valid patchlevel
+
+    if ($conf->{config}{perl_patchlevel} =~ m{^git\w*-([^-]+)}i) {
+	$conf->{config}{git_branch}   ||= $1;
+	$conf->{config}{git_describe} ||= $conf->{config}{perl_patchlevel};
 	}
 
     $conf;
@@ -163,6 +190,12 @@ sub plv2hash
 	    my $rev = $2;
 	    $rev =~ s/^ revision \s+ (\S+) \s*//x and $config{revision} = $1;
 	    $rev and $config{version_patchlevel_string} = $rev;
+	    next;
+	    }
+
+	if (s/^\s+(Snapshot of:)\s+(\S+)//) {
+	    $config{git_commit_id_title} = $1;
+	    $config{git_commit_id}       = $2;
 	    next;
 	    }
 
