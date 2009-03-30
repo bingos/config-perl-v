@@ -6,4 +6,7 @@ use warnings;
 use Data::Peek;
 use Config::Perl::V;
 
-DDumper Config::Perl::V::myconfig [ @ARGV ];
+my $conf = Config::Perl::V::myconfig [ @ARGV ];
+DDumper $conf;
+
+DDumper Config::Perl::V::summary $conf;

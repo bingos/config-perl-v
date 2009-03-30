@@ -221,6 +221,25 @@ sub plv2hash
 	});
     } # plv2hash
 
+sub summary
+{
+    my $conf = shift;
+    ref $conf eq "HASH" &&
+	exists $conf->{config} && exists $conf->{build} or return;
+
+    my %info = map {
+	exists $conf->{config}{$_} ? ( $_ => $conf->{config}{$_} ) : () }
+	qw( archname osname osvers revision patchlevel subversion version
+	    cc ccversion gccversion config_args inc_version_list
+	    d_longdbl d_longlong use64bitall use64bitint useithreads
+	    uselongdouble usemultiplicity usemymalloc useperlio useshrplib 
+	    doublesize intsize ivsize nvsize longdblsize longlongsize lseeksize
+	    );
+    $info{$_}++ for grep { $conf->{build}{options}{$_} } keys %{$conf->{build}{options}};
+
+    return \%info;
+    } # summary
+
 sub myconfig
 {
     my $args = shift;
@@ -274,14 +293,20 @@ Config::Perl::V - Structured data retreival of perl -V output
 
 =head1 DESCRIPTION
 
-=head2 myconfig ()
+=head2 $conf = myconfig ()
 
 This function will collect the data decribed in L<the hash structure> below,
+and return that as a hash reference. It optionally accepts an option to
+include more entries from %ENV. See L<environment> below.
 
-=head2 plv2hash ()
+=head2 $conf = plv2hash ($text [, ...])
 
-Convert a sole 'perl -V' text block to a complete myconfig hash.
-All unknown entries are defaulted.
+Convert a sole 'perl -V' text block, or list of lines, to a complete
+myconfig hash.  All unknown entries are defaulted.
+
+=head2 $info = summary ($conf)
+
+Return an arbitrary selection of the information.
 
 =head2 The hash structure
 
