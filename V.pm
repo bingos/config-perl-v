@@ -423,7 +423,6 @@ Please feedback what is wrong
 
 * Implement retrieval functions/methods
 * Documentation
-* Include the perl -V parse block from Andreas
 
 =head1 AUTHOR
 
