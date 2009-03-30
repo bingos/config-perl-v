@@ -1,9 +1,10 @@
 0.02	- 30 Mar 2009, H.Merijn Brand
 
-    - Added plv2hash
+    - Added plv2hash ()
     - Documentation
-    - Add all (new) version related config entries, including git
-    - Add a derived section
+    - Added all (new) version related config entries, including git
+    - Added a derived section
+    - Added summary ()
 
 0.01	- 29 Mar 2009, H.Merijn Brand
 
