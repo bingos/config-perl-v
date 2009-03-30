@@ -141,11 +141,12 @@ sub _make_derived
 {
     my $conf = shift;
 
-    exists $conf->{config}{Off_t}
+    exists $conf->{config}{Off_t} and
 	$conf->{derived}{Off_t} = delete $conf->{config}{Off_t};
     exists $conf->{derived}{Off_t} && !exists $conf->{config}{lseektype} and
 	$conf->{config}{lseektype} = $conf->{derived}{Off_t};
 
+    $conf;
     } # _make_derived
 
 sub plv2hash
@@ -174,12 +175,13 @@ sub plv2hash
 	}
     my $build = { %empty_build };
     $build->{osname} = $config{osname};
-    return {
+    return _make_derived ({
 	build		=> $build,
 	environment	=> {},
 	config		=> \%config,
+	derived		=> {},
 	inc		=> [],
-	};
+	});
     } # plv2hash
 
 sub myconfig
@@ -209,12 +211,13 @@ sub myconfig
 
     my %config = map { $_ => $Config{$_} } @config_vars;
 
-    return {
+    return _make_derived ({
 	build		=> $build,
 	environment	=> \%env,
 	config		=> \%config,
+	derived		=> {},
 	inc		=> \@INC,
-	};
+	});
     } # myconfig
 
 1;
@@ -284,7 +287,7 @@ or
 This information is not available anywhere else, including C<%Config>,
 but it is the information that is only known to the perl binary.
 
-The extracted information is stored in 4 entries in the C<build> hash:
+The extracted information is stored in 5 entries in the C<build> hash:
 
 =over 4
 
@@ -304,6 +307,13 @@ value is 0.
 
 This is a hash with all the known defines as keys. The value is either 0,
 which means unknown or unset, or 1, which means defined.
+
+=item derived
+
+As some verables are reported by a different name in the output of C<perl -V>
+than their actual name in C<%Config>, I decided to leave the C<config> entry
+as close to reality as possible, and put in the entries that might have been
+guessed by the printed output in a seperate block.
 
 =item patches
 
@@ -359,7 +369,7 @@ H.Merijn Brand <h.m.brand@xs4all.nl>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 1999-2009 H.Merijn Brand
+Copyright (C) 2009 H.Merijn Brand
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
