@@ -141,10 +141,14 @@ sub _make_derived
 {
     my $conf = shift;
 
-    exists $conf->{config}{Off_t} and
-	$conf->{derived}{Off_t} = delete $conf->{config}{Off_t};
-    exists $conf->{derived}{Off_t} && !exists $conf->{config}{lseektype} and
-	$conf->{config}{lseektype} = $conf->{derived}{Off_t};
+    for ( [ lseektype	=> "Off_t"	],
+	  [ myuname	=> "uname"	],
+	  ) {
+	my ($official, $derived) = @$_;
+	$conf->{config}{$derived}  ||= $conf->{config}{$official};
+	$conf->{config}{$official} ||= $conf->{config}{$derived};
+	$conf->{derived}{$derived} = delete $conf->{config}{$derived};
+	}
 
     $conf;
     } # _make_derived
