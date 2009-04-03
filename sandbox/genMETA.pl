@@ -59,28 +59,30 @@ else {
 
 __END__
 --- #YAML:1.1
-name:                 Config::Perl::V
-version:              VERSION
-abstract:             Structured data retreival of perl -V output
-license:              perl
+name:                    Config::Perl::V
+version:                 VERSION
+abstract:                Structured data retreival of perl -V output
+license:                 perl
 author:              
     - H.Merijn Brand <h.m.brand@xs4all.nl>
-generated_by:         Author
-distribution_type:    module
+generated_by:            Author
+distribution_type:       module
 provides:
     Config::Perl::V:
-        file:         V.pm
-        version:      VERSION
+        file:            V.pm
+        version:         VERSION
 requires:     
-    perl:             5.005
+    perl:                5.005
+configure_requires:
+    ExtUtils::MakeMaker: 0
 build_requires:
-    perl:             5.005
-    Test::Harness:    0
-    Test::More:       0
-    Test::NoWarnings: 0
+    perl:                5.005
+    Test::Harness:       0
+    Test::More:          0
+    Test::NoWarnings:    0
 resources:
-    license:          http://dev.perl.org/licenses/
-    repository:       http://repo.or.cz/w/Config-Perl-V.git
+    license:             http://dev.perl.org/licenses/
+    repository:          http://repo.or.cz/w/Config-Perl-V.git
 meta-spec:
-    version:          1.4
-    url:              http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:             1.4
+    url:                 http://module-build.sourceforge.net/META-spec-v1.4.html
