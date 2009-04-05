@@ -5,7 +5,7 @@ package Config::Perl::V;
 use strict;
 use warnings;
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 use Config;
 
@@ -190,6 +190,10 @@ sub plv2hash
 	    my $rev = $2;
 	    $rev =~ s/^ revision \s+ (\S+) \s*//x and $config{revision} = $1;
 	    $rev and $config{version_patchlevel_string} = $rev;
+	    my ($rel) = $config{package} =~ m{perl(\d)};
+	    my ($vers, $subvers) = $rev =~ m{version\s+(\d+)\s+subversion\s+(\d+)};
+	    defined $vers && defined $subvers && defined $rel and
+		$config{version} = "$rel.$vers.$subvers";
 	    next;
 	    }
 

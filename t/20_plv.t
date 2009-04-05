@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 9;
 use Test::NoWarnings;
 
 use Config::Perl::V;
@@ -14,6 +14,7 @@ for (qw( build environment config inc )) {
     }
 is ($conf->{build}{osname}, $conf->{config}{osname}, "osname");
 is ($conf->{build}{stamp}, 0, "No build time known");
+is ($conf->{config}{version}, "5.10.0", "reconstructed \%Config{version}");
 
 __END__
 Summary of my perl5 (revision 5 version 10 subversion 0) configuration:
