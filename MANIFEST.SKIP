@@ -6,3 +6,5 @@ MANIFEST.SKIP
 pm_to_blib
 sandbox/
 .releaserc
+\.tgz$
+\.tar.gz$
