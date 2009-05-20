@@ -5,7 +5,7 @@ package Config::Perl::V;
 use strict;
 use warnings;
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 use Config;
 
@@ -227,7 +227,7 @@ sub plv2hash
 
 sub summary
 {
-    my $conf = shift;
+    my $conf = shift || myconfig ();
     ref $conf eq "HASH" &&
 	exists $conf->{config} && exists $conf->{build} or return;
 
@@ -313,9 +313,10 @@ known when the C<-V> information is collected.
 Convert a sole 'perl -V' text block, or list of lines, to a complete
 myconfig hash.  All unknown entries are defaulted.
 
-=head2 $info = summary ($conf)
+=head2 $info = summary ([$conf])
 
-Return an arbitrary selection of the information.
+Return an arbitrary selection of the information. If no C<$conf> is
+given, C<myconfig ()> is used instead.
 
 =head2 The hash structure
 
