@@ -5,9 +5,16 @@ package Config::Perl::V;
 use strict;
 use warnings;
 
-our $VERSION = "0.04";
-
 use Config;
+use Exporter;
+use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
+$VERSION     = "0.05";
+@ISA         = ("Exporter");
+@EXPORT_OK   = qw( plv2hash summary myconfig signature );
+%EXPORT_TAGS = (
+    all => [ @EXPORT_OK  ],
+    sig => [ "signature" ],
+    );
 
 #  Characteristics of this binary (from libperl):
 #    Compile-time options: DEBUGGING PERL_DONT_CREATE_GVSV PERL_MALLOC_WRAP
@@ -244,6 +251,17 @@ sub summary
     return \%info;
     } # summary
 
+sub signature
+{
+    eval { require Digest::MD5 };
+    $@ and return "00000000000000000000000000000000";
+
+    my $conf = shift || summary ();
+    return Digest::MD5::md5_hex (join "\xFF" => map {
+	"$_=".(defined $conf->{$_} ? $conf->{$_} : "\xFE");
+	} sort keys %$conf);
+    } # signature
+
 sub myconfig
 {
     my $args = shift;
@@ -299,7 +317,7 @@ Config::Perl::V - Structured data retreival of perl -V output
 
 =head2 $conf = myconfig ()
 
-This function will collect the data decribed in L<the hash structure> below,
+This function will collect the data described in L<the hash structure> below,
 and return that as a hash reference. It optionally accepts an option to
 include more entries from %ENV. See L<environment> below.
 
@@ -317,6 +335,13 @@ myconfig hash.  All unknown entries are defaulted.
 
 Return an arbitrary selection of the information. If no C<$conf> is
 given, C<myconfig ()> is used instead.
+
+=head2 $md5 = signature ([$conf])
+
+Return the MD5 of the info returned by C<summary ()> without the
+C<config_args> entry.
+
+If C<Digest::MD5> is not available, it return a string with only C<0>'s.
 
 =head2 The hash structure
 

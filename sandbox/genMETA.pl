@@ -14,7 +14,7 @@ GetOptions (
 my $version;
 open my $pm, "<", "V.pm" or die "Cannot read V.pm";
 while (<$pm>) {
-    m/^our .VERSION\s*=\s*"?([-0-9._]+)"?\s*;\s*$/ or next;
+    m/^.VERSION\s*=\s*"?([-0-9._]+)"?\s*;\s*$/ or next;
     $version = $1;
     last;
     }

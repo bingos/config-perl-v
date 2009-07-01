@@ -1,6 +1,8 @@
-0.04	- 20 May 2009, H.Merijn Brand
+0.04	- 01 Jul 2009, H.Merijn Brand
 
     - Default for summary is myconfig
+    - Added signature ()
+    - Added @EXPORT_OK and EXPORT_TAGS
 
 0.03	- 05 Apr 2009, H.Merijn Brand
 
