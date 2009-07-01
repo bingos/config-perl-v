@@ -257,6 +257,7 @@ sub signature
     $@ and return "00000000000000000000000000000000";
 
     my $conf = shift || summary ();
+    delete $conf->{config_args};
     return Digest::MD5::md5_hex (join "\xFF" => map {
 	"$_=".(defined $conf->{$_} ? $conf->{$_} : "\xFE");
 	} sort keys %$conf);
