@@ -1,3 +1,9 @@
+0.10	- 19 Aug 2009, H.Merijn Brand
+
+    - Add PERL_DISABLE_PMC to the list of -V's compile-time options.
+
+0.05	- 01 Jul 2009, H.Merijn Brand
+    - 0.04 was shipped with 0.05 as $VERSION. Sorry
 0.04	- 01 Jul 2009, H.Merijn Brand
 
     - Default for summary is myconfig
