@@ -455,10 +455,10 @@ Please feedback what is wrong
 
 =head1 TODO
 
-* Implement retrieval functions/methods
-* Documentation
-* Error checking
-* Tests
+ * Implement retrieval functions/methods
+ * Documentation
+ * Error checking
+ * Tests
 
 =head1 AUTHOR
 
