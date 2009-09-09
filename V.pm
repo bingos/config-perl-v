@@ -396,7 +396,7 @@ This is most likely the same as C$Config{osname}>, and was the name
 known when perl was built. It might be different if perl was cross-compiled.
 
 The default for this field, if it cannot be extracted, is to copy C<$Config{osname}>.
-`
+
 =item stamp
 
 This is the time string for which the perl binary was compiled. The default
