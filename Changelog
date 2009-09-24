@@ -1,6 +1,7 @@
-0.10	- 09 Sep 2009, H.Merijn Brand
+0.10	- 24 Sep 2009, H.Merijn Brand
 
     - Add PERL_DISABLE_PMC to the list of -V's compile-time options.
+    - Add PERL_IS_MINIPERL to the list of -V's compile-time options.
     - pod fix (Jim Cromie)
 
 0.05	- 01 Jul 2009, H.Merijn Brand
