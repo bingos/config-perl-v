@@ -8,7 +8,7 @@ use warnings;
 use Config;
 use Exporter;
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
-$VERSION     = "0.10";
+$VERSION     = "0.11";
 @ISA         = ("Exporter");
 @EXPORT_OK   = qw( plv2hash summary myconfig signature );
 %EXPORT_TAGS = (
@@ -393,10 +393,11 @@ The extracted information is stored in 5 entries in the C<build> hash:
 
 =item osname
 
-This is most likely the same as C$Config{osname}>, and was the name
+This is most likely the same as C<$Config{osname}>, and was the name
 known when perl was built. It might be different if perl was cross-compiled.
 
-The default for this field, if it cannot be extracted, is to copy C<$Config{osname}>.
+The default for this field, if it cannot be extracted, is to copy
+C<$Config{osname}>. The two may be differing in casing (OpenBSD vs openbsd).
 
 =item stamp
 
