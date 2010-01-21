@@ -1,7 +1,8 @@
-0.11	- 05 Jan 2010, H.Merijn Brand
+0.11	- 21 Jan 2010, H.Merijn Brand
 
     - osname in {build} can be different from {config} (OpenBSD vs openbsd)
     - Add USE_ATTRIBUTES_FOR_PERLIO to the list of -V's compile-time options.
+    - Add USE_PERL_ATOF to the list of -V's compile-time options.
 
 0.10	- 24 Sep 2009, H.Merijn Brand
 
