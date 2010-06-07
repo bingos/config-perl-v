@@ -8,7 +8,7 @@ use warnings;
 use Config;
 use Exporter;
 use vars qw($VERSION @ISA @EXPORT_OK %EXPORT_TAGS);
-$VERSION     = "0.12";
+$VERSION     = "0.13";
 @ISA         = ("Exporter");
 @EXPORT_OK   = qw( plv2hash summary myconfig signature );
 %EXPORT_TAGS = (
@@ -309,7 +309,7 @@ __END__
 
 =head1 NAME
 
-Config::Perl::V - Structured data retreival of perl -V output
+Config::Perl::V - Structured data retrieval of perl -V output
 
 =head1 SYNOPSIS
 
@@ -413,10 +413,10 @@ which means unknown or unset, or 1, which means defined.
 
 =item derived
 
-As some verables are reported by a different name in the output of C<perl -V>
+As some variables are reported by a different name in the output of C<perl -V>
 than their actual name in C<%Config>, I decided to leave the C<config> entry
 as close to reality as possible, and put in the entries that might have been
-guessed by the printed output in a seperate block.
+guessed by the printed output in a separate block.
 
 =item patches
 
