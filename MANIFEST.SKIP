@@ -8,3 +8,4 @@ sandbox/
 .releaserc
 \.tgz$
 \.tar.gz$
+\.aspell\.local\.pws
