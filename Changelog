@@ -1,6 +1,11 @@
-0.13	- 07 Jun 2010, H.Merijn Brand
+0.14	- 07 Sep 2011, H.Merijn Brand
+
+    - Upped copyright to 2011
+
+0.13	- 07 Sep 2011, H.Merijn Brand
 
     - Some spelling fixes
+    - More cross-checks for META data
 
 0.12	- 16 Mar 2010, H.Merijn Brand
 
