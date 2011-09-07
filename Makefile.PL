@@ -7,8 +7,7 @@ use strict;
 use ExtUtils::MakeMaker;
 
 my %wm = (
-    NAME	  =>   "Config::Perl::V",
-    DISTNAME	  =>   "Config-Perl-V",
+    NAME	  =>   "Config-Perl-V",
     AUTHOR        =>   "H.Merijn Brand <h.m.brand\@xs4all.nl>",
     VERSION_FROM  =>   "V.pm",
     ABSTRACT_FROM =>   "V.pm",
