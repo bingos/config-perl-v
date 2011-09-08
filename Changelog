@@ -1,50 +1,45 @@
-0.14	- 07 Sep 2011, H.Merijn Brand
+0.15	- 08 Sep 2011, H.Merijn Brand
+    * 
 
-    - Upped copyright to 2011
-    - NAME / DISTNAME in Makefile.PL
+0.14	- 07 Sep 2011, H.Merijn Brand
+    * Upped copyright to 2011
+    * NAME / DISTNAME in Makefile.PL
 
 0.13	- 07 Sep 2011, H.Merijn Brand
-
-    - Some spelling fixes
-    - More cross-checks for META data
+    * Some spelling fixes
+    * More cross-checks for META data
 
 0.12	- 16 Mar 2010, H.Merijn Brand
-
-    - YAML dropped to spec 1.0 (RT#55614)
+    * YAML dropped to spec 1.0 (RT#55614)
 
 0.11	- 15 Mar 2010, H.Merijn Brand
-
-    - Upped copyright to 2010
-    - osname in {build} can be different from {config} (OpenBSD vs openbsd)
-    - Add USE_ATTRIBUTES_FOR_PERLIO to the list of -V's compile-time options.
-    - Add USE_PERL_ATOF to the list of -V's compile-time options.
+    * Upped copyright to 2010
+    * osname in {build} can be different from {config} (OpenBSD vs openbsd)
+    * Add USE_ATTRIBUTES_FOR_PERLIO to the list of -V's compile-time options.
+    * Add USE_PERL_ATOF to the list of -V's compile-time options.
 
 0.10	- 24 Sep 2009, H.Merijn Brand
-
-    - Add PERL_DISABLE_PMC to the list of -V's compile-time options.
-    - Add PERL_IS_MINIPERL to the list of -V's compile-time options.
-    - pod fix (Jim Cromie)
+    * Add PERL_DISABLE_PMC to the list of -V's compile-time options.
+    * Add PERL_IS_MINIPERL to the list of -V's compile-time options.
+    * pod fix (Jim Cromie)
 
 0.05	- 01 Jul 2009, H.Merijn Brand
-    - 0.04 was shipped with 0.05 as $VERSION. Sorry
-0.04	- 01 Jul 2009, H.Merijn Brand
+    * 0.04 was shipped with 0.05 as $VERSION. Sorry
 
-    - Default for summary is myconfig
-    - Added signature ()
-    - Added @EXPORT_OK and EXPORT_TAGS
+0.04	- 01 Jul 2009, H.Merijn Brand
+    * Default for summary is myconfig
+    * Added signature ()
+    * Added @EXPORT_OK and EXPORT_TAGS
 
 0.03	- 05 Apr 2009, H.Merijn Brand
-
-    - Reconstruct version from perl-v output (dagolden)
+    * Reconstruct version from perl-v output (dagolden)
 
 0.02	- 30 Mar 2009, H.Merijn Brand
-
-    - Added plv2hash ()
-    - Documentation
-    - Added all (new) version related config entries, including git
-    - Added a derived section
-    - Added summary ()
+    * Added plv2hash ()
+    * Documentation
+    * Added all (new) version related config entries, including git
+    * Added a derived section
+    * Added summary ()
 
 0.01	- 29 Mar 2009, H.Merijn Brand
-
-    - Initial release
+    * Initial release
