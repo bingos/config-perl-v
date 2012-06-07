@@ -3,8 +3,16 @@
 use strict;
 use warnings;
 
-use Test::More tests => 9;
-use Test::NoWarnings;
+BEGIN {
+  use Test::More;
+  my $tests = 8;
+  unless ( $ENV{PERL_CORE} ) {
+    require Test::NoWarnings;
+    Test::NoWarnings->import();
+    $tests++;
+  }
+  plan tests => $tests;
+}
 
 use Config::Perl::V;
 
